@@ -1,0 +1,8 @@
+read -p "nhap lenh can thuc hien: " cmd1
+read -p "nhap tham so cua lenh: " arg1
+if ! command -v "$cmd1"
+then
+	echo "lenh '$cmd1' khong dung"
+	exit 1
+fi
+$cmd1 "$arg1"

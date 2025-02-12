@@ -1,0 +1,10 @@
+echo "\\***********************************************\\"
+echo "Today is: "
+date
+echo "Hello $USER !!!"
+echo "Your current working directory: $PWD"
+echo "Your home directory: $HOME"
+echo "Please press any key to finish: "
+read -n 1 -s key
+echo "				Thank you very much!!"
+echo "\\***********************************************\\"

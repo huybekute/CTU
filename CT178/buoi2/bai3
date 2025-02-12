@@ -1,0 +1,8 @@
+read x
+read y
+echo "Tham so ban da truyen vao la 2 so: $x va $y"
+echo "Tong: x + y = `expr $x + $y`"
+echo "Hieu: x - y = `expr $x - $y`"
+echo "Tich: x * y = `expr $x \* $y`"
+echo "Thuong: x / y = `expr $x / $y`"
+echo "So du: x % y = `expr $x % $y`"

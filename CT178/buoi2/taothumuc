@@ -1,0 +1,7 @@
+echo "nhap ten thu muc muon tao: "; read folder_name
+if mkdir "$folder_name"
+then 
+	echo "da tao thanh cong thu muc '$folder_name'"
+else
+	echo "khong the tao thu muc"
+fi
