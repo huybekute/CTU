@@ -1,0 +1,7 @@
+for i
+do
+	more $i
+	echo
+	trap 'continue' 2
+done
+trap 2
