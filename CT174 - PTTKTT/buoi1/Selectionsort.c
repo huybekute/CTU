@@ -42,6 +42,7 @@ void print(rec a[], int n){
 	}
 }
 
+
 int main(){
 	int n = 0;
 	rec a[100];
