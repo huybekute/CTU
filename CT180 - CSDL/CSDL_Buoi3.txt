@@ -1,0 +1,201 @@
+-- cau1
+CREATE TABLE Khuvuc(
+    IP char(10) PRIMARY KEY,
+    tenKhuvuc varchar2(50) NOT NULL,
+    tang smallint
+);
+
+CREATE TABLE Phong(
+    MP char(3) PRIMARY KEY,
+    tenphong varchar(50) NOT NULL,
+    somay smallint NOT NULL,
+    IP char(10) NOT NULL,
+    FOREIGN KEY (IP) REFERENCES Khuvuc(IP)
+);
+
+CREATE TABLE Loai(
+    idloai varchar(10) PRIMARY KEY,
+    tenloai varchar(50) NOT NULL
+);
+
+CREATE TABLE May(
+    idMay varchar(10) PRIMARY KEY,
+    tenmay varchar(50) NOT NULL,
+    IP char(10) NOT NULL,
+    ad smallint CHECK ( ad >=0 AND ad <=255),
+    idloai varchar(10) NOT NULL,
+    MP char(3) NOT NULL,
+    FOREIGN KEY(IP) REFERENCES Khuvuc(IP),
+    FOREIGN KEY(idloai) REFERENCES Loai(idloai),
+    FOREIGN KEY(MP) REFERENCES Phong(MP)
+);
+
+CREATE TABLE Phanmem(
+    idPM char(4) PRIMARY KEY,
+    tenPM varchar(50) NOT NULL,
+    ngaymua date,
+    version varchar(3),
+    idloai varchar(10) NOT NULL,
+    gia int CHECK (gia >=0),
+    FOREIGN KEY (idloai) REFERENCES Loai(idloai)
+);
+
+CREATE TABLE Caidat(
+    id char(3) PRIMARY KEY,
+    idMay varchar(10) NOT NULL,
+    idPM char(4) NOT NULL,
+    ngaycai date DEFAULT SYSDATE,
+    FOREIGN KEY(idMay) REFERENCES May(idMay),
+    FOREIGN KEY(idPM) REFERENCES Phanmem(idPM)
+);
+
+-- cau2
+
+INSERT INTO Khuvuc(IP, tenKhuvuc) VALUES('130.120.80', 'Brin RDC');
+INSERT INTO Khuvuc(IP, tenKhuvuc) VALUES('130.120.81', 'Brin tang 1');
+INSERT INTO Khuvuc(IP, tenKhuvuc) VALUES('130.120.82', 'Brin tang 2');
+
+INSERT INTO Phong VALUES('s01', 'Salle 1', 3, '130.120.80');
+INSERT INTO Phong VALUES('s02', 'Salle 2', 2, '130.120.80');
+INSERT INTO Phong VALUES('s03', 'Salle 3', 2, '130.120.80');
+INSERT INTO Phong VALUES('s11', 'Salle 11', 2, '130.120.81');
+INSERT INTO Phong VALUES('s12', 'Salle 12', 1, '130.120.81');
+INSERT INTO Phong VALUES('s21', 'Salle 21', 2, '130.120.82');
+INSERT INTO Phong VALUES('s22', 'Salle 22', 0, '130.120.82');
+INSERT INTO Phong VALUES('s23', 'Salle 23', 0, '130.120.82');
+
+INSERT INTO Loai VALUES('TX', 'Terminal X-Window');
+INSERT INTO Loai VALUES('UNIX', 'Systeme Unix');
+INSERT INTO Loai VALUES('PCNT', 'PC Windows NT');
+INSERT INTO Loai VALUES('PCWS', 'PC Windows');
+INSERT INTO Loai VALUES('NC', 'Network Computer');
+
+INSERT INTO May VALUES('p1', 'Poste 1', '130.120.80', 01, 'TX', 's01');
+INSERT INTO May VALUES('p2', 'Poste 2', '130.120.80', 02, 'UNIX', 's01');
+INSERT INTO May VALUES('p3', 'Poste 3', '130.120.80', 03, 'TX', 's01');
+INSERT INTO May VALUES('p4', 'Poste 4', '130.120.80', 04, 'PCWS', 's02');
+INSERT INTO May VALUES('p5', 'Poste 5', '130.120.80', 05, 'PCWS', 's02');
+INSERT INTO May VALUES('p6', 'Poste 6', '130.120.80', 06, 'UNIX', 's03');
+INSERT INTO May VALUES('p7', 'Poste 7', '130.120.80', 07, 'TX', 's03');
+INSERT INTO May VALUES('p8', 'Poste 8', '130.120.81', 01, 'UNIX', 's11');
+INSERT INTO May VALUES('p9', 'Poste 9', '130.120.81', 02, 'TX', 's11');
+INSERT INTO May VALUES('p10', 'Poste 10', '130.120.81', 03, 'UNIX', 's12');
+INSERT INTO May VALUES('p11', 'Poste 11', '130.120.82', 01, 'PCNT', 's21');
+INSERT INTO May VALUES('p12', 'Poste 12', '130.120.82', 02, 'PCWS', 's21');
+
+INSERT INTO Phanmem VALUES('log1', 'Oracle 6', '05-13-1995', '6.2', 'UNIX', 3000);
+INSERT INTO Phanmem VALUES('log2', 'Oracle 8', '09-15-1999', '8i', 'UNIX', 5600);
+INSERT INTO Phanmem VALUES('log3', 'SQL Server', '04-12-1998', '7', 'PCNT', 2700);
+INSERT INTO Phanmem VALUES('log4', 'Front Page', '06-03-1997', '5', 'PCWS', 500);
+INSERT INTO Phanmem VALUES('log5', 'WinDev', '05-12-1997', '5', 'PCWS', 750);
+INSERT INTO Phanmem VALUES('log6', 'SQL*Net', '', '2.0', 'UNIX', 500);
+INSERT INTO Phanmem VALUES('log7', 'I. I. S.', '04-12-2002', '2', 'PCNT', 810);
+INSERT INTO Phanmem VALUES('log8', 'DreamWeaver', '09-21-2003', '2.0', 'PCNT', 1400);
+
+INSERT INTO Caidat VALUES(1, 'p2', 'log1', '5-15-2003');
+INSERT INTO Caidat VALUES(2, 'p2', 'log2', '9-17-2003');
+INSERT INTO Caidat (id, idMay, idPM) VALUES(3, 'p4', 'log5');
+INSERT INTO Caidat VALUES(4, 'p6', 'log6', '5-20-2003');
+INSERT INTO Caidat VALUES(5, 'p6', 'log1', '5-20-2003');
+INSERT INTO Caidat VALUES(6, 'p8', 'log2', '5-19-2003');
+INSERT INTO Caidat VALUES(7, 'p8', 'log6', '5-20-2003');
+INSERT INTO Caidat VALUES(8, 'p11', 'log3', '4-20-2003');
+INSERT INTO Caidat VALUES(9, 'p12', 'log4', '4-20-2003');
+INSERT INTO Caidat VALUES(10, 'p11', 'log7', '4-20-2003');
+INSERT INTO Caidat VALUES(11, 'p7', 'log7', '4-01-2002');
+
+-- cau3
+UPDATE Khuvuc SET tang = CASE 
+    WHEN IP = '130.120.80' THEN 0
+    WHEN IP = '130.120.81' THEN 1
+    WHEN IP = '130.120.82' THEN 2
+END;
+
+-- cau4
+UPDATE Phanmem SET gia = gia * 0.9 WHERE idloai = 'PCNT';
+
+-- cau5
+ALTER TABLE May ADD nbLog smallint;
+ALTER TABLE Phanmem ADD nbInstall smallint;
+UPDATE May SET nbLog = CASE
+    WHEN idMay = 'p1' THEN 0
+    WHEN idMay = 'p2' THEN 2
+    WHEN idMay = 'p3' THEN 0
+    WHEN idMay = 'p4' THEN 1
+    WHEN idMay = 'p5' THEN 0
+    WHEN idMay = 'p6' THEN 2
+    WHEN idMay = 'p7' THEN 1
+    WHEN idMay = 'p8' THEN 2
+    WHEN idMay = 'p9' THEN 0
+    WHEN idMay = 'p10' THEN 0
+    WHEN idMay = 'p11' THEN 2
+    WHEN idMay = 'p12' THEN 1
+END;
+
+UPDATE Phanmem SET nbInstall = CASE
+    WHEN idPM = 'log1' THEN 2
+    WHEN idPM = 'log2' THEN 2
+    WHEN idPM = 'log3' THEN 1
+    WHEN idPM = 'log4' THEN 1
+    WHEN idPM = 'log5' THEN 1
+    WHEN idPM = 'log6' THEN 2
+    WHEN idPM = 'log7' THEN 2
+END;
+
+-- cau6
+
+CREATE TABLE PhanmemUNIX(
+    idPM char(4) NOT NULL,
+    tenPM varchar(50) NOT NULL,
+    ngaymua date,
+    version varchar(3)
+);
+
+-- cau7
+
+ALTER TABLE PhanmemUNIX ADD PRIMARY KEY(idPM);
+
+-- cau8
+
+ALTER TABLE PhanmemUNIX ADD gia int CHECK(gia >= 0);
+
+-- cau9
+
+ALTER TABLE PhanmemUNIX MODIFY version VARCHAR(15);
+
+-- cau10
+
+ALTER TABLE PhanmemUNIX MODIFY tenPM UNIQUE;
+
+-- cau11
+
+INSERT INTO PhanmemUNIX(idPM, tenPM, ngaymua, version, gia) SELECT idPM, tenPM, ngaymua, version, gia FROM Phanmem WHERE idloai = 'UNIX';
+
+-- cau12
+
+ALTER TABLE PhanmemUNIX DROP COLUMN version;
+
+-- cau13
+
+DELETE FROM Phanmem WHERE gia > 5000; 
+-- không xóa được vì có bảng khác đang tham chiếu đến bảng này thông qua khóa ngoại
+
+-- cau14
+
+DELETE FROM PhanmemUNIX WHERE gia > 5000;
+-- Xóa được một dòng vì trong bảng này không có bảng khác tham chiếu đến
+
+-- cau15
+
+DROP TABLE Phanmem;
+-- không xóa được vì có bảng khác đang tham chiếu đến bảng này thông qua khóa ngoại (bảng Cài đặt)
+
+-- cau16
+
+DROP TABLE PhanmemUNIX;
+-- Xóa được vì trong bảng này không có bảng khác tham chiếu đến
+
+-- cau17
+
+ALTER TABLE May DROP COLUMN nbLog;
+ALTER TABLE Phanmem DROP COLUMN nbInstall;
