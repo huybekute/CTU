@@ -1,0 +1,35 @@
+-- cau1
+SELECT idloai FROM May WHERE idMay = 'p8';
+
+-- cau2
+SELECT tenPM FROM Phanmem WHERE idloai = 'UNIX';
+
+-- cau3
+SELECT tenphong, P.IP, P.MP FROM Phong P, May M WHERE P.IP = M.IP AND (M.idloai = 'UNIX' OR M.idloai = 'PCWS');
+
+-- cau4
+SELECT tenphong, P.IP, P.MP FROM Phong P, May M WHERE P.IP = M.IP AND (M.idloai = 'UNIX' OR M.idloai = 'PCWS') AND P.IP = '130.120.80' ORDER BY P.MP;
+
+-- cau5
+SELECT COUNT(id) AS sophanmem FROM Caidat WHERE idMay = 'p6';
+
+-- cau6
+SELECT COUNT(idMay) AS somay FROM Caidat WHERE idPM = 'log1';
+
+-- cau7 
+SELECT tenmay, IP FROM May WHERE idloai = 'TX';
+
+-- cau8
+SELECT AVG(gia) as giatrungbinh FROM Phanmem WHERE idloai = 'UNIX';
+
+-- cau9
+SELECT tenphong FROM Phong WHERE MP IN(SELECT MP FROM May WHERE idMay IN (SELECT idMay FROM Caidat WHERE idPM IN (SELECT idPM FROM Phanmem WHERE tenPM LIKE 'Oracle %')));
+
+-- cau10
+SELECT tenPM FROM Phanmem WHERE idPM IN(SELECT idPM FROM Caidat WHERE idMay IN(SELECT idMay FROM May WHERE MP IN (SELECT MP FROM Phong WHERE tenphong = 'Salle 1')));
+
+-- cau11
+SELECT tenPM, ngaymua FROM Phanmem WHERE to_char(ngaymua, 'YYYY') = '1997';
+
+-- cau12
+SELECT tenPM FROM Phanmem WHERE idPM IN (SELECT idPM FROM Caidat WHERE idMay IN (SELECT idMay FROM May WHERE idloai = 'UNIX')) AND gia >= '2000';
