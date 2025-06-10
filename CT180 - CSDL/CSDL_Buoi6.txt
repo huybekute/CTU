@@ -1,0 +1,97 @@
+-- cau1
+SELECT idloai FROM May WHERE idMay = 'p8';
+
+-- cau2
+SELECT tenPM FROM Phanmem WHERE idloai = 'UNIX';
+
+-- cau3
+SELECT tenphong, P.IP, P.MP FROM Phong P, May M WHERE P.IP = M.IP AND (M.idloai = 'UNIX' OR M.idloai = 'PCWS');
+
+-- cau4
+SELECT tenphong, P.IP, P.MP FROM Phong P, May M WHERE P.IP = M.IP AND (M.idloai = 'UNIX' OR M.idloai = 'PCWS') AND P.IP = '130.120.80' ORDER BY P.MP;
+
+-- cau5
+SELECT COUNT(id) AS sophanmem FROM Caidat WHERE idMay = 'p6';
+
+-- cau6
+SELECT COUNT(idMay) AS somay FROM Caidat WHERE idPM = 'log1';
+
+-- cau7 
+SELECT tenmay, IP FROM May WHERE idloai = 'TX';
+
+-- cau8
+SELECT idMay, COUNT(*) AS sophanmem FROM Caidat GROUP BY idMay;
+
+-- cau9
+SELECT MP, COUNT(*) AS somay FROM May GROUP BY MP;
+
+-- cau10
+SELECT idPM, COUNT(DISTINCT idMay) AS sophanmem FROM Caidat GROUP BY idPM;
+
+-- cau11
+SELECT AVG(gia) AS giatrungbinh FROM Phanmem WHERE idloai = 'UNIX';
+
+-- cau12
+SELECT MAX(ngaymua) AS ngaymuagannhat FROM Phanmem;
+
+-- cau13
+SELECT COUNT(*) AS so_may_co_it_nhat_2pm FROM (SELECT idMay FROM Caidat GROUP BY idMay HAVING COUNT(*) >=2);
+
+-- cau 14
+SELECT COUNT(*) AS so_may_co_it_nhat_2pm FROM (SELECT idMay FROM Caidat GROUP BY idMay HAVING COUNT(*) >=2);
+
+-- cau15
+SELECT * FROM Loai WHERE idloai NOT IN(SELECT DISTINCT idLoai FROM May);
+
+SELECT a.idloai FROM Loai a LEFT JOIN May b ON a.idloai = b.idloai WHERE b.idloai IS NULL;
+
+-- cau 16
+SELECT idLoai FROM May INTERSECT SELECT idLoai FROM Phanmem;
+
+-- cau17
+SELECT DISTINCT idloai FROM May WHERE idloai NOT IN (SELECT DISTINCT idloai FROM Phanmem);
+
+SELECT DISTINCT a.idloai FROM May a LEFT JOIN Phanmem b ON a.idloai = b.idloai WHERE b.idloai IS NULL;
+
+-- cau18
+SELECT idMay, IP FROM May WHERE idMay IN (SELECT idMay FROM Caidat WHERE idPM = 'log6');
+
+-- cau19
+SELECT idMay, IP FROM May WHERE idMay IN (SELECT idMay FROM Caidat WHERE idPM IN(SELECT idPM FROM Phanmem WHERE tenPM = 'Oracle 8'));
+
+-- cau20
+SELECT a.tenKhuvuc, a.IP FROM Khuvuc a WHERE a.IP IN (SELECT b.IP FROM May b WHERE (b.idloai ='TX') GROUP BY b.IP HAVING COUNT(*) = 3);
+
+-- cau21
+SELECT tenphong FROM Phong WHERE MP IN ( SELECT MP FROM May WHERE idMay IN (SELECT idMay FROM Caidat WHERE idPM = (SELECT idPM FROM Phanmem WHERE tenPM = 'Oracle 6')));
+
+-- cau22
+SELECT tenPM FROM Phanmem WHERE ngaymua = (SELECT MAX(ngaymua) AS ngaymuagannhat FROM Phanmem);4
+
+-- cau23
+SELECT May.idMay, May.IP FROM May JOIN Caidat ON May.idMay = Caidat.idmay WHERE idPM = 'log6';
+
+-- cau24
+SELECT a.idMay, a.IP FROM May a JOIN Caidat b ON a.idMay = b.idMay JOIN Phanmem c ON b.idPM = c.idPM WHERE tenPM = 'Oracle 8';
+
+-- cau25
+SELECT tenKhuvuc FROM Khuvuc a JOIN May b ON a.IP = b.IP WHERE b.idloai = 'TX' GROUP BY tenKhuvuc HAVING COUNT(*) >= 3;
+
+-- cau26
+SELECT tenphong FROM Phong a JOIN May b ON a.MP = b.MP JOIN Caidat c ON b.idMay = c.idMay JOIN Phanmem d ON c.idPM = d.idPM WHERE tenPM = 'Oracle 6';
+
+-- cau27
+SELECT tenmay FROM May WHERE idMay IN (SELECT idMay FROM Caidat WHERE idMay != 'p6' AND idPM IN (SELECT idPM FROM Caidat WHERE idMay = 'p6'));
+
+-- cau28
+SELECT tenPM, gia FROM Phanmem WHERE (idloai = 'PCNT' AND gia > ANY (SELECT gia FROM Phanmem WHERE idloai = 'UNIX'));
+
+-- cau29
+SELECT tenPM, gia FROM Phanmem WHERE (idloai = 'UNIX' AND gia > ALL (SELECT gia FROM Phanmem WHERE idloai = 'PCNT'));
+
+-- cau30
+SELECT idMay FROM Caidat WHERE idMay != 'p6' AND idPM IN (SELECT idPM FROM Caidat WHERE idMay ='p6');
+
+-- cau31
+SELECT idMay FROM Caidat WHERE idPM IN (SELECT DISTINCT idPM FROM Caidat WHERE idMay = 'p2') GROUP BY idMay HAVING COUNT(DISTINCT idPM) = (SELECT COUNT(DISTINCT idPM) FROM (SELECT idPM FROM Caidat WHERE idMay = 'p2'));
+
