@@ -22,13 +22,21 @@ public class Diem {
 	
 	public void nhap() {
 		Scanner kb = new Scanner(System.in);
+		System.out.print("Nhap x: ");
 		x = kb.nextInt();
+		System.out.print("Nhap y: ");
 		y = kb.nextInt();
 	}
 	
 	public void in() {
-		System.out.println("( " + x + ", " + y + " )");
+		System.out.print("( " + x + ", " + y + " )");
 	}
+	
+	public void doiDiem(int dx, int dy) {
+		x+=dx;
+		y+=dy;
+	}
+	
 	
 	public void setX(int x) {
 		this.x = x;

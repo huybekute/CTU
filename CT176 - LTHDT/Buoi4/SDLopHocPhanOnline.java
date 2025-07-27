@@ -6,8 +6,6 @@ public class SDLopHocPhanOnline {
 		LopHocPhanOnline l1 = new LopHocPhanOnline();
 		l1.nhap();
 		l1.in();
-		System.out.println("Ty le Online cua Lop l1 la: " + l1.tinhTyLeOnline() + "%");
-
 		
 		//nhap ds lophp online
 		Scanner kb = new Scanner(System.in);
@@ -16,7 +14,7 @@ public class SDLopHocPhanOnline {
 		n = kb.nextInt();
 		kb.nextLine();
 		LopHocPhanOnline[] lhpo = new LopHocPhanOnline[n];
-		for(int i=0; i<n; i++) {
+		for(int i=0; i<n; i++) {	
 			lhpo[i] = new LopHocPhanOnline();
 			lhpo[i].nhap();
 		}

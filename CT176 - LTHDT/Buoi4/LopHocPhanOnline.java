@@ -71,4 +71,5 @@ public class LopHocPhanOnline extends LopHocPhan{
 		if(tongTiet == 0) return 0;
 		return (tietonline * 100.0) / tongTiet;
 	}
+	
 }
