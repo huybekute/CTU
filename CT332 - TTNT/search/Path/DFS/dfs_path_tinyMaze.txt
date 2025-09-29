@@ -1,0 +1,1 @@
+'West', 'West', 'West', 'West', 'South', 'South', 'East', 'South', 'South', 'West', 
