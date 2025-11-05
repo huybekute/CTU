@@ -1,0 +1,161 @@
+
+# Cau1
+class Human:
+  def __init__(self, hoten, namsinh, quequan, nghenghiep):
+    self.hoten = hoten
+    self.namsinh = namsinh
+    self.quequan = quequan
+    self.nghenghiep = nghenghiep
+  def live(self, noicutru):
+    print(f"{self.hoten} dang song tai {noicutru}")
+  def work(self, coquan):
+    print(f"{self.hoten} dang lam {self.nghenghiep} tai {coquan}")
+
+from ast import DictComp
+# Cau2
+ds = []
+sl = int(input("Nhap so luong nguoi: "))
+for i in range (sl):
+  print(f"nhap thong tin nguoi thu {i+1}")
+  hoten = input("ho ten: ")
+  namsinh = input("nam sinh: ")
+  quequan = input("que quan: ")
+  nghenghiep = input("nghe nghiep:")
+  nguoi = Human(hoten, namsinh, quequan, nghenghiep)
+  ds.append(nguoi)
+
+for i, nguoi in enumerate(ds, start=1):
+  print(f"nguoi thu {i}")
+  print(f"ho ten: {nguoi.hoten}")
+  print(f"nam sinh: {nguoi.namsinh}")
+  print(f"que quan: {nguoi.quequan}")
+  print(f"nghe nghiep: {nguoi.nghenghiep}")
+  dcCoQuan = input("nhap dc co quan")
+  nguoi.work(dcCoQuan)
+
+# Cau3
+class Student(Human):
+  def __init__(self, hoten, namsinh, quequan, mssv, nganh, diemTB):
+    super().__init__(hoten, namsinh, quequan, "Student")
+    self.mssv = mssv
+    self.nganh = nganh
+    self.diemTB = diemTB
+  def study(self, lop):
+    print(f"{self.hoten} dang hoc lop {lop}")
+  def rank(self):
+    if(self.diemTB < 4):
+      loai = "yeu"
+    elif(self.diemTB <6):
+      loai = "tb"
+    elif(self.diemTB <8):
+      loai = "kha"
+    else:
+      loai = "gioi"
+    # print(f"{self.hoten} co diem TB {self.diemTB} la {loai}")
+    return loai
+
+# Cau 4
+sv1 = Student("Le Van An", 2005, "Vinh Long", "12345", "CNTT", 7.6)
+sv2 = Student("Tran Van Binh", 2007, "Tra Vinh", "56789", "TCNH", 4.5)
+
+print(f"ho tnn: {sv1.hoten}")
+print(f"nam sinh: {sv1.namsinh}")
+print(f"que quan: {sv1.quequan}")
+print(f"nghe nghiep: {sv1.nghenghiep}")
+print(f"mssv: {sv1.mssv}")
+print(f"nganh: {sv1.nganh}")
+print(f"diem tb: {sv1.diemTB}")
+sv1.rank()
+
+print(f"ho tnn: {sv2.hoten}")
+print(f"nam sinh: {sv2.namsinh}")
+print(f"que quan: {sv2.quequan}")
+print(f"nghe nghiep: {sv2.nghenghiep}")
+print(f"mssv: {sv2.mssv}")
+print(f"nganh: {sv2.nganh}")
+print(f"diem tb: {sv2.diemTB}")
+sv2.rank()
+
+# Cau5
+def nhap():
+  while True:
+    hoten = input("nhap ho tne")
+    if(len(hoten) > 25):
+      print("ho ten khong duoc vuot qua 25 ky tu")
+    else:
+      break
+  while True:
+    namsinh = input("nhap nam sinh")
+    if (not namsinh.isdigit()):
+      print("ns ko hop le")
+    elif len(namsinh) != 4:
+      print("ns ko hop le")
+    else:
+      break
+
+  while True:
+    quequan = input("nhap que quan")
+    if(len(quequan) > 50):
+      print("que quan khong duoc vuot qua 50 ky tu")
+    else:
+      break
+
+  while True:
+    mssv = input("nhap mssv")
+    if (not mssv.isdigit()):
+      print("mssv ko hop le")
+    elif len(mssv) != 5:
+      print("mssv ko hop le")
+    else:
+      break
+  while True:
+    nganh = input("nhap nganh")
+    if(len(nganh) > 40):
+      print("nganh khong duoc vuot qua 40 ky tu")
+    else:
+      break
+
+  while True:
+    diemTB = float(input("nhap diem tb"))
+    if (diemTB <0 or diemTB >10):
+      print("diem tb ko hop le")
+    else:
+      break
+  return Student(hoten, namsinh, quequan, mssv, nganh, diemTB)
+
+# Cau6
+def nhapDS():
+  while True:
+    try:
+      sl6 = int(input("Nhập số lượng sinh viên cần nhập: "))
+      if sl6 <= 0:
+        print("Số lượng phải lớn hơn 0! Vui lòng nhập lại.")
+      else:
+        break
+    except ValueError:
+      print("Vui lòng nhập một số nguyên hợp lệ.")
+
+  ds6 = []
+  for i in range (sl6):
+    sv6 = nhap()
+    ds6.append(sv6)
+  return ds6
+
+def inDS(ds6):
+  for i, sv6 in enumerate(ds6, start=1):
+    print("-" * 90)
+    print(f" " * 45 + "sinh vien  {i}")
+    print("-" * 90)
+    print(f"ho ten: {sv6.hoten}")
+    print(f"nam sinh: {sv6.namsinh}")
+    print(f"que quan: {sv6.quequan}")
+    print(f"mssv: {sv6.mssv}")
+    print(f"nghe nghiep: {sv6.nghenghiep}")
+    print(f"nganh: {sv6.nganh}")
+    print(f"diem tb: {sv6.diemTB}")
+    print(f"xep loai : {sv6.rank()}")
+    print("-" * 90)
+
+if __name__ == "__main__":
+    ds6 = nhapDS()
+    inDS(ds6)
